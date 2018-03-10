@@ -6,6 +6,14 @@
 
 `const B_ = require('bu-better-underscore');`
 
+## What's this do?
+
+`new B_(array).map(func)`
+
+`array.map(func)`
+
+`B_.map(func)(list)`
+
 ## How's this different than underscore?
 
 undrescore provides static methods that take in as a parameter the very object they are operating on.
