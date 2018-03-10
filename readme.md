@@ -1,3 +1,5 @@
+# bu-better-underscore
+
 ## Setup
 
 `npm i -save bu-better-underscore`
@@ -16,7 +18,7 @@ let inverse = num => 1 / num;
 _.map(_.filter(list, notZero), inverse); 
 ```
 
-bu-better-underscore on the other hand allows invoking methods directly on the object.
+bu-better-underscore, on the other hand, allows invoking methods directly on the object.
 
 ```
 let list = new B_([0, 1, 2, 3, 4]);
@@ -24,6 +26,22 @@ let notZero = num => num !== 0;
 let inverse = num => 1 / num;
 
 list.filter(notZero).map(inverse).unwrap();
+```
+
+## What about promises?
+
+underscore is overly verbose and requires wrapping inside another function.
+
+```
+let promise = Promise.resolve([1, 2, 3, 4, 5]);
+promise.then(list => _.map(list, num => num * 3));
+```
+
+bu-better-underscore, on the other hand, can create the wrapping function for you.
+
+```
+let promise = Promise.resolve([1, 2, 3, 4, 5]);
+promise.then(B_.map(num => num * 3));
 ```
 
 ## Example

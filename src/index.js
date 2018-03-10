@@ -19,6 +19,7 @@ _.each(_.keys(_), name => {
     B_.prototype[name] = function () {
         return new B_(orig(this.list, ...arguments));
     };
+    B_[name] = handler => list => orig(list, handler);
 });
 
 module.exports = B_;
