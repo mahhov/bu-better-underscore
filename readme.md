@@ -6,6 +6,10 @@
 
 `const B_ = require('bu-better-underscore');`
 
+or
+
+`require('bu-better-underscore').addPrototype();`
+
 ## What's this do?
 
 `new B_(array).map(func)`
