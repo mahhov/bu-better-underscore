@@ -12,6 +12,14 @@ class B_ {
     get length() {
         return this.list.length;
     }
+
+    static addPrototype() {
+        _.each(_.keys(_), name => {
+            Object.prototype[name] = function () {
+                return _[name](this, ...arguments);
+            };
+        });
+    }
 }
 
 _.each(_.keys(_), name => {
