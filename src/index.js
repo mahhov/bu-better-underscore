@@ -5,6 +5,16 @@ class B_ {
         this.list = list;
     }
 
+    set(field, func) {
+        return this.each(function (elem) {
+            elem[field] = func(...arguments);
+        });
+    }
+
+    asList(func) {
+        return func(this.list)
+    }
+
     unwrap() {
         return this.list;
     }
@@ -31,3 +41,10 @@ _.each(_.keys(_), name => {
 });
 
 module.exports = B_;
+
+// todo
+// implement and document repeat
+// document set and as list
+// B_ = require('./src/index');
+// x = new B_([{w:1},{w:2}])
+// x.set('a', (a, b, c) => {console.log(a, b, c)})
