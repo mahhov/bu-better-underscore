@@ -11,6 +11,10 @@ class B_ {
         });
     }
 
+    repeat(count) {
+        return this.map(elem => _.times(count, () => elem));
+    }
+
     asList(func) {
         return func(this.list)
     }
@@ -43,8 +47,7 @@ _.each(_.keys(_), name => {
 module.exports = B_;
 
 // todo
-// implement and document repeat
-// document set and as list
+// document set and as list and repeat
 // B_ = require('./src/index');
 // x = new B_([{w:1},{w:2}])
 // x.set('a', (a, b, c) => {console.log(a, b, c)})
