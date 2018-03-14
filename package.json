@@ -3,11 +3,16 @@
   "version": "0.0.4",
   "description": "",
   "main": "src/index.js",
-  "scripts": {},
+  "scripts": {
+    "test": "jasmine"
+  },
   "author": "mahhov",
   "license": "ISC",
   "repository": {
     "type": "git",
     "url": "https://github.com/mahhov/bu-better-underscore"
+  },
+  "devDependencies": {
+    "jasmine": "^3.1.0"
   }
 }

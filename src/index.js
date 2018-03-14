@@ -51,3 +51,5 @@ module.exports = B_;
 // B_ = require('./src/index');
 // x = new B_([{w:1},{w:2}])
 // x.set('a', (a, b, c) => {console.log(a, b, c)})
+// x.repeat(4).flatten()
+// move init to class static
