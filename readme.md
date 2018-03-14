@@ -10,7 +10,7 @@ or
 
 `require('bu-better-underscore').addPrototype();`
 
-## What's this do?
+## Overview
 
 `new B_(array).map(func)`
 
@@ -18,7 +18,7 @@ or
 
 `B_.map(func)(list)`
 
-## How's this different than underscore?
+## Reads left to right and 1 less parameter
 
 undrescore provides static methods that take in as a parameter the very object they are operating on.
 
@@ -44,7 +44,7 @@ let inverse = num => 1 / num;
 list.filter(notZero).map(inverse).unwrap();
 ```
 
-bu-better-underscore can also optionally add the utility methods directly to the object prototype.
+bu-better-underscore can also optionally add the utility methods directly to the object prototype to avoid using `new B_();` and `.unwrap();`
 
 ```
 require('bu-better-underscore').addPrototype();
@@ -56,9 +56,9 @@ let inverse = num => 1 / num;
 list.filter(notZero).map(inverse);
 ```
 
-## What about promises?
+## Helps create wrapper functions
 
-underscore is overly verbose and requires wrapping your function inside another function.
+underscore is overly verbose when working with promises and requires wrapping the handler functions inside other functions.
 
 ```
 let promise = Promise.resolve([1, 2, 3, 4, 5]);
@@ -103,10 +103,10 @@ const people = {
 const _ = require('underscore');
 
 let bios = [people.men, people.women];
-let heightWeightRatios = _.map(_.flatten(_.pluck(_.union(bios), 'bio')), person => person.height / person.weight);
-let averageheightWeightRatio = _.reduce(heightWeightRatios, (a, b) => a + b) / heightWeightRatios.length;
+let ratios = _.map(_.flatten(_.pluck(_.union(bios), 'bio')), person => person.height / person.weight);
+let average = _.reduce(ratios, (a, b) => a + b) / ratios.length;
 
-console.log(averageheightWeightRatio);
+console.log(average);
 // 0.041472713284006396
 ```
 
@@ -116,10 +116,10 @@ console.log(averageheightWeightRatio);
 const B_ = require('bu-better-underscore');
 
 let bios = new B_([people.men, people.women]);
-let heightWeightRatios = bios.union().pluck('bio').flatten().map(person => person.height / person.weight);
-let averageheightWeightRatio = heightWeightRatios.reduce((a, b) => a + b).unwrap() / heightWeightRatios.length;
+let ratios = bios.union().pluck('bio').flatten().map(person => person.height / person.weight);
+let average = ratios.reduce((a, b) => a + b).unwrap() / ratios.length;
 
-console.log(averageheightWeightRatio);
+console.log(average);
 // 0.041472713284006396
 ```
 
@@ -129,9 +129,9 @@ console.log(averageheightWeightRatio);
 require('bu-better-underscore').addPrototype();
 
 let bios = [people.men, people.women];
-let heightWeightRatios = bios.union().pluck('bio').flatten().map(person => person.height / person.weight);
-let averageheightWeightRatio = heightWeightRatios.reduce((a, b) => a + b) / heightWeightRatios.length;
+let ratios = bios.union().pluck('bio').flatten().map(person => person.height / person.weight);
+let average = ratios.reduce((a, b) => a + b) / ratios.length;
 
-console.log(averageheightWeightRatio);
+console.log(average);
 // 0.041472713284006396
 ```
