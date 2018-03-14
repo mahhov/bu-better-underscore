@@ -35,8 +35,8 @@ describe('B_', function () {
         describe('#asList', function () {
             it('should invoke the handler function once with the value of the B_ object', function () {
                 let list = new B_([1, 2, 3]);
-                let spy = jasmine.createSpy('handler');
-                list.asList(spy);
+                let spy = jasmine.createSpy('handler').and.returnValue('return');
+                expect(list.asList(spy)).toEqual('return');
                 expect(spy).toHaveBeenCalledTimes(1);
                 expect(spy).toHaveBeenCalledWith([1, 2, 3]);
             });

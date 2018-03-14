@@ -72,7 +72,82 @@ let promise = Promise.resolve([1, 2, 3, 4, 5]);
 promise.then(B_.map(num => num * 3));
 ```
 
-## Example
+## Adds utility methods
+
+There are 3 additional utility methods bu-better-underscore provides.
+
+### `set(field, func)`
+
+sets a property on each element
+
+```
+let students = new B_([{name: 'joe', score1: 10, score2: 30}, {name: 'joey', score1: 20, score2: 15}]);
+students
+    .set('totalScore', student => Math.max(student.score1, student.score2))
+    .set('id', (student, index, students) => `student_${index}_of_${students.length}_${student.name}`);
+```
+
+Results in 
+
+```
+  [{
+      name: 'joe',
+      score1: 10,
+      score2: 30,
+      totalScore: 30,
+      id: 'student_0_of_2_joe'
+  }, {
+      name: 'joey',
+      score1: 20,
+      score2: 15,
+      totalScore: 20,
+      id: 'student_1_of_2_joey'
+  }] 
+
+```
+
+### `repeat(count)`
+
+replaces each element with a list containing that element repeated `count` times
+
+```
+let list = new B_([1, 2, 3]);
+list.repeat(3);
+// [[1, 1, 1], [2, 2, 2], [3, 3, 3]];
+```
+
+### `asList()`
+
+invokes the handler function exactly once
+
+```
+let pickSecond = array => array.length >= 2 && array[1]; 
+let list = new B_([1, 2, 3]);
+list.asList(pickSecond)
+// 2
+```
+
+### `unwrap()`
+
+returns a javascript array, object, primitive representing the B_ object's value
+
+```
+new B_([1, 2, 3]).unwrap() // array: [1, 2, 3]
+new B_({v: 1}).unwrap() // object {v: 1}
+new B_(1).unwrap() // primitive 1
+```
+
+### `length`
+
+returns length
+
+```
+new B_([1, 2, 3]).length // 3
+```
+
+# Examples
+
+## Basic Example
  
 ### Given
 
@@ -135,3 +210,9 @@ let average = ratios.reduce((a, b) => a + b) / ratios.length;
 console.log(average);
 // 0.041472713284006396
 ```
+
+## Example with Promises
+
+### Given
+
+-- coming soon --

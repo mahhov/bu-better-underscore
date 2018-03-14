@@ -16,7 +16,7 @@ class B_ {
     }
 
     asList(func) {
-        return func(this.list)
+        return func(this.list);
     }
 
     unwrap() {
@@ -47,9 +47,4 @@ _.each(_.keys(_), name => {
 module.exports = B_;
 
 // todo
-// document set and as list and repeat
-// B_ = require('./src/index');
-// x = new B_([{w:1},{w:2}])
-// x.set('a', (a, b, c) => {console.log(a, b, c)})
-// x.repeat(4).flatten()
 // move init to class static
