@@ -32,39 +32,12 @@ describe('B_', () => {
             });
         });
 
-        // describe('#mapInner', () => {
-        //     it('', () => {
-        //         let list = new B_({a: 5, list: [{c: 3}, {c: 4}]});
-        //         expect(list.mapInner('list', (elem, parent) => elem.c * parent.a).list)
-        //             .toEqual([15, 20]);
-        //     });
-        // });
-        //
-        // describe('#eachMapInner', () => {
-        //     it('', () => {
-        //         let list = new B_([{a: 5, list: [{c: 3}, {c: 4}]}, {a: 6, list: [{c: 5}, {c: 6}]}]);
-        //         expect(list.eachMapInner('list', (elem, parent) => elem.c * parent.a).list)
-        //             .toEqual([[15, 20], [30, 36]]);
-        //     });
-        // });
-        //
-        // describe('flatObject', () => {
-        //     it('', () => {
-        //         let list = new B_({a: 5, list: [{c: 3}, {c: 4}]});
-        //         expect(list.flatObject('list', 'b', 'd').list)
-        //             .toEqual([{b: {c: 3}, d: {a: 5}}, {b: {c: 4}, d: {a: 5}}]);
-        //     });
-        // });
-        //
-        // describe('eachFlatObject', () => {
-        //     it('', () => {
-        //         let list = new B_([{a: 5, list: [{c: 3}, {c: 4}]}, {a: 6, list: [{c: 5}, {c: 6}]}]);
-        //         expect(list.eachFlatObject('list', 'b', 'd').list)
-        //             .toEqual([
-        //                 [{b: {c: 3}, d: {a: 5}}, {b: {c: 4}, d: {a: 5}}],
-        //                 [{b: {c: 5}, d: {a: 6}}, {b: {c: 6}, d: {a: 6}}]]);
-        //     });
-        // });
+        describe('#field', () => {
+            it('should return named field as a B_ object', () => {
+                let obj = new B_({dog: 3});
+                expect(obj.field('dog').list).toEqual(3);
+            });
+        });
 
         describe('#asList', () => {
             it('should invoke the handler function once with the value of the B_ object', () => {

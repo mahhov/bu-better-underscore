@@ -15,47 +15,9 @@ class B_ {
         return this.map(elem => _.times(count, () => elem));
     }
 
-    // objectify(name) {
-    //     return this.map(elem => {
-    //         let obj = {};
-    //         obj[name] = elem;
-    //         return obj;
-    //     });
-    // }
-    //
-    // // todo document & test
-    // field(name) {
-    //     return new B_(this.list[name]);
-    // }
-    //
-    // // todo document & test name
-    // mapInner(listName, func) {
-    //     return this.field(listName).map(elem => {
-    //         return func(elem, this.list)
-    //     });
-    // }
-    //
-    // // todo document & test name
-    // eachMapInner(listName, func) {
-    //     return this.map(elem => new B_(elem).mapInner(listName, func).unwrap());
-    // }
-    //
-    // // todo document & test name
-    // flatObject(listName, elemName, parentName) {
-    //     let list = this.field(listName);
-    //     delete this.list[listName];
-    //     return list.map(elem => {
-    //         let flat = {};
-    //         flat[elemName] = elem;
-    //         flat[parentName] = this.list;
-    //         return flat;
-    //     });
-    // }
-    //
-    // // todo document & test name
-    // eachFlatObject(listName, elemName, parentName) {
-    //     return this.map(elem => new B_(elem).flatObject(listName, elemName, parentName).unwrap());
-    // }
+    field(name) {
+        return new B_(this.list[name]);
+    }
 
     asList(func) {
         return func(this.list);

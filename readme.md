@@ -113,7 +113,17 @@ replaces each element with a list containing that element repeated `count` times
 ```
 let list = new B_([1, 2, 3]);
 list.repeat(3);
-// [[1, 1, 1], [2, 2, 2], [3, 3, 3]];
+// [[1, 1, 1], [2, 2, 2], [3, 3, 3]]
+```
+
+### `field(name)`
+
+return specified field of an object. like `pluck` but for objects
+
+```
+let list = new B_({a: 1, b: 2, c: 3});
+list.field('b');
+// 2
 ```
 
 ### `asList()`
