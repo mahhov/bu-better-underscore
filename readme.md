@@ -331,3 +331,37 @@ let getUnReviewedPullRequests = async users => {
 
 getUnReviewedPullRequests(users);
 ```
+
+### Doesn't underscore `chain` address this?
+
+Kind of. Except, underscore lacks methods to operate on entire lists (such as `set`, `field`, and `asList`). This leads to multiple ugly wrapping (`chain`) and unwrapping (`value`) in order to switch back and forth between underscore objects and js objects.
+
+```
+const _ = require('underscore');
+
+let getUnReviewedPullRequests = async (users) => {
+    
+    _.chain(
+        await Promise.all(
+            _.chain(users) // ugly
+                .pluck('name')
+                .map(gitApi.getRepos)
+                .value())) // ugly
+        .pluck('data')
+        .flatten()
+        .unique(repo => repo.id)
+        .each(async repo => {
+            _.chain(
+                (await gitApi.getPullRequests(repo.id))
+                    .data) // ugly
+                .each(async pullRequest => {
+                    let inProgress = !!(await gitApi.getReviews(repo.id, pullRequest.number))
+                        .data // ugly
+                        .length;
+                    console.log(`repo ${repo.name} : ${pullRequest.title} (${pullRequest.number}) inProgress: ${inProgress}`);
+                });
+        });
+};
+
+getUnReviewedPullRequests(users);
+```
