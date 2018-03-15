@@ -1,5 +1,5 @@
 const gitApi = require('./gitApi');
-const B_ = require('../src/index');
+const b_ = require('../src/index');
 
 const users = [
     {name: 'johnny', 'description': 'the boss'},
@@ -7,9 +7,9 @@ const users = [
 
 
 let getUnReviewedPullRequests = async (users) => {
-    users = new B_(users);
+    users = b_(users);
 
-    let repos = new B_(await
+    let repos = b_(await
         users
             .pluck('name')
             .map(gitApi.getRepos)
@@ -18,17 +18,17 @@ let getUnReviewedPullRequests = async (users) => {
         .flatten()
         .unique(repo => repo.id);
 
-    let pullRequests = new B_(await
+    let pullRequests = b_(await
         repos
             .pluck('id')
             .map(gitApi.getPullRequests)
             .asList(Promise.all.bind(Promise)))
         .pluck('data')
         .each((pullRequestsOfRepo, index) => {
-            new B_(pullRequestsOfRepo).set('repo', pullRequest => repos.unwrap()[index])
+            b_(pullRequestsOfRepo).set('repo', pullRequest => repos.unwrap()[index])
         }).flatten();
 
-    let reviews = new B_(await
+    let reviews = b_(await
         pullRequests
             .map(pullRequest => gitApi.getReviews(pullRequest.repo.id, pullRequest.number))
             .asList(Promise.all.bind(Promise)))

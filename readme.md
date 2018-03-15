@@ -4,7 +4,7 @@
 
 `npm i -save bu-better-underscore`
 
-`const B_ = require('bu-better-underscore');`
+`const b_ = require('bu-better-underscore');`
 
 or
 
@@ -12,11 +12,11 @@ or
 
 ## Overview
 
-`new B_(array).map(func)`
+`b_([1, 2, 3]).map(num => num * 2)`
 
-`array.map(func)`
+`b_.addPrototype(); [1, 2, 3].map(num => num * 2)`
 
-`B_.map(func)(list)`
+`b_.map(num => num * 2)([1, 2, 3])`
 
 ## Reads left to right and 1 less parameter
 
@@ -35,16 +35,16 @@ _.map(_.filter(list, notZero), inverse);
 bu-better-underscore, on the other hand, allows invoking methods directly on the object.
 
 ```
-const B_ = require('bu-better-underscore');
+const b_ = require('bu-better-underscore');
 
-let list = new B_([0, 1, 2, 3, 4]);
+let list = b_([0, 1, 2, 3, 4]);
 let notZero = num => num !== 0;
 let inverse = num => 1 / num;
 
 list.filter(notZero).map(inverse).unwrap();
 ```
 
-bu-better-underscore can also optionally add the utility methods directly to the object prototype to avoid using `new B_();` and `.unwrap();`
+bu-better-underscore can also optionally add the utility methods directly to the object prototype to avoid using `b_(list);` and `.unwrap();`
 
 ```
 require('bu-better-underscore').addPrototype();
@@ -69,19 +69,19 @@ bu-better-underscore, on the other hand, can create the wrapping function for yo
 
 ```
 let promise = Promise.resolve([1, 2, 3, 4, 5]);
-promise.then(B_.map(num => num * 3));
+promise.then(b_.map(num => num * 3));
 ```
 
 ## Adds utility methods
 
-There are 3 additional utility methods bu-better-underscore provides.
+bu-better-underscore provides additional utility methods.
 
 ### `set(field, func)`
 
 sets a property on each element
 
 ```
-let students = new B_([{name: 'joe', score1: 10, score2: 30}, {name: 'joey', score1: 20, score2: 15}]);
+let students = b_([{name: 'joe', score1: 10, score2: 30}, {name: 'joey', score1: 20, score2: 15}]);
 students
     .set('totalScore', student => Math.max(student.score1, student.score2))
     .set('id', (student, index, students) => `student_${index}_of_${students.length}_${student.name}`);
@@ -111,7 +111,7 @@ Results in
 replaces each element with a list containing that element repeated `count` times
 
 ```
-let list = new B_([1, 2, 3]);
+let list = b_([1, 2, 3]);
 list.repeat(3);
 // [[1, 1, 1], [2, 2, 2], [3, 3, 3]]
 ```
@@ -121,7 +121,7 @@ list.repeat(3);
 return specified field of an object. like `pluck` but for objects
 
 ```
-let list = new B_({a: 1, b: 2, c: 3});
+let list = b_({a: 1, b: 2, c: 3});
 list.field('b');
 // 2
 ```
@@ -132,7 +132,7 @@ invokes the handler function exactly once
 
 ```
 let pickSecond = array => array.length >= 2 && array[1]; 
-let list = new B_([1, 2, 3]);
+let list = b_([1, 2, 3]);
 list.asList(pickSecond)
 // 2
 ```
@@ -142,9 +142,9 @@ list.asList(pickSecond)
 returns a javascript array, object, primitive representing the B_ object's value
 
 ```
-new B_([1, 2, 3]).unwrap() // array: [1, 2, 3]
-new B_({v: 1}).unwrap() // object {v: 1}
-new B_(1).unwrap() // primitive 1
+b_([1, 2, 3]).unwrap() // array: [1, 2, 3]
+b_({v: 1}).unwrap() // object {v: 1}
+b_(1).unwrap() // primitive 1
 ```
 
 ### `length`
@@ -152,7 +152,7 @@ new B_(1).unwrap() // primitive 1
 returns length
 
 ```
-new B_([1, 2, 3]).length // 3
+b_([1, 2, 3]).length // 3
 ```
 
 # Examples
@@ -198,9 +198,9 @@ console.log(average);
 ### With bu-better-underscore
 
 ```
-const B_ = require('bu-better-underscore');
+const b_ = require('bu-better-underscore');
 
-let bios = new B_([people.men, people.women]);
+let bios = b_([people.men, people.women]);
 let ratios = bios.union().pluck('bio').flatten().map(person => person.height / person.weight);
 let average = ratios.reduce((a, b) => a + b).unwrap() / ratios.length;
 
@@ -304,12 +304,12 @@ getUnReviewedPullRequests(users);
 ### With bu-better-underscore
 
 ```
-const B_ = require('../src/index');
+const b_ = require('../src/index');
 
 let getUnReviewedPullRequests = async users => {
-    users = new B_(users);
+    users = b_(users);
 
-    new B_(await
+    b_(await
         users
             .pluck('name')
             .map(gitApi.getRepos)
@@ -318,10 +318,10 @@ let getUnReviewedPullRequests = async users => {
         .flatten()
         .unique(repo => repo.id)
         .each(async repo => {
-            new B_(await gitApi.getPullRequests(repo.id))
+            b_(await gitApi.getPullRequests(repo.id))
                 .field('data')
                 .each(async pullRequest => {
-                    let inProgress = !!new B_(await gitApi.getReviews(repo.id, pullRequest.number))
+                    let inProgress = !!b_(await gitApi.getReviews(repo.id, pullRequest.number))
                         .field('data')
                         .length;
                     console.log(`repo ${repo.name} : ${pullRequest.title} (${pullRequest.number}) inProgress: ${inProgress}`);

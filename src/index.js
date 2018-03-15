@@ -30,25 +30,27 @@ class B_ {
     get length() {
         return this.list.length;
     }
-
-    static addPrototype() {
-        _.each(_.keys(_), name => {
-            Object.prototype[name] = function () {
-                return _[name](this, ...arguments);
-            };
-        });
-    }
 }
+
+let b_ = (list) => new B_(list);
+
+b_.addPrototype = () => {
+    _.each(_.keys(_), name => {
+        Object.prototype[name] = function () {
+            return _[name](this, ...arguments);
+        };
+    });
+};
 
 _.each(_.keys(_), name => {
     let orig = _[name];
     B_.prototype[name] = function () {
         return new B_(orig(this.list, ...arguments));
     };
-    B_[name] = handler => list => orig(list, handler);
+    b_[name] = handler => list => orig(list, handler);
 });
 
-module.exports = B_;
+module.exports = b_;
 
 // todo
 // move init to class static
