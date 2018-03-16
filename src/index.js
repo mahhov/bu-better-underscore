@@ -46,7 +46,7 @@ _.each(_.keys(_), name => {
 let methods = b_(Object.getOwnPropertyNames(B_.prototype))
     .filter(name => typeof B_.prototype[name] === 'function');
 
-// add B_ and _ methods as static methods to b_
+// add to b_ static methods
 methods.each(name => {
     b_[name] = handler => value => b_(value)[name](handler);
 });
@@ -64,4 +64,3 @@ module.exports = b_;
 
 // todo
 // move init to class static
-// unwrap to getter

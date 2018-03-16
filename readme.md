@@ -44,7 +44,7 @@ let inverse = num => 1 / num;
 list.filter(notZero).map(inverse).unwrap();
 ```
 
-bu-better-underscore can also optionally add the utility methods directly to the object prototype to avoid using `b_(list);` and `.unwrap();`
+bu-better-underscore can also optionally add the utility methods directly to the object prototype to avoid using `b_(value);` and `.unwrap();`
 
 ```
 require('bu-better-underscore').addPrototype();
@@ -137,7 +137,7 @@ list.asList(pickSecond)
 // 2
 ```
 
-### `unwrap()`
+### `unwrap()` & `value`
 
 returns a javascript array, object, primitive representing the B_ object's value
 
@@ -145,6 +145,10 @@ returns a javascript array, object, primitive representing the B_ object's value
 b_([1, 2, 3]).unwrap() // array: [1, 2, 3]
 b_({v: 1}).unwrap() // object {v: 1}
 b_(1).unwrap() // primitive 1
+
+b_([1, 2, 3]).value // array: [1, 2, 3]
+b_({v: 1}).value // object {v: 1}
+b_(1).value // primitive 1
 ```
 
 ### `length`
@@ -202,7 +206,7 @@ const b_ = require('bu-better-underscore');
 
 let bios = b_([people.men, people.women]);
 let ratios = bios.union().pluck('bio').flatten().map(person => person.height / person.weight);
-let average = ratios.reduce((a, b) => a + b).unwrap() / ratios.length;
+let average = ratios.reduce((a, b) => a + b).value / ratios.length;
 
 console.log(average);
 // 0.041472713284006396
