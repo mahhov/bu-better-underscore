@@ -33,6 +33,13 @@ describe('b_', () => {
             expect(handler).toHaveBeenCalledWith(2, 1, [1, 2, 3]);
             expect(handler).toHaveBeenCalledWith(3, 2, [1, 2, 3]);
         });
+
+        it('#set', function () {
+            b_.addPrototype();
+            let times = [{start: 1}, {start: 5}];
+            times.set('end', (elem, index) => elem.start + index + 1);
+            expect(times).toEqual([{start: 1, end: 2}, {start: 5, end: 7}]);
+        });
     });
 
     describe('additional methods', () => {

@@ -28,30 +28,41 @@ class B_ {
     }
 
     get length() {
-        return this.list.length;
+        return this.list && this.list.length;
     }
 }
 
 let b_ = (list) => new B_(list);
 
-b_.addPrototype = () => {
-    _.each(_.keys(_), name => {
-        Object.prototype[name] = function () {
-            return _[name](this, ...arguments);
-        };
-    });
-};
-
+// add to B_ what _ includes
 _.each(_.keys(_), name => {
     let orig = _[name];
     B_.prototype[name] = function () {
         return new B_(orig(this.list, ...arguments));
     };
-    b_[name] = handler => list => orig(list, handler);
 });
+
+// get a list of B_ native and _ methods
+let methods = b_(Object.getOwnPropertyNames(B_.prototype))
+    .filter(name => typeof B_.prototype[name] === 'function');
+
+// add B_ and _ methods as static methods to b_
+methods.each(name => {
+    b_[name] = handler => list => b_(list)[name](handler);
+});
+
+// add to prototype
+b_.addPrototype = () => {
+    methods.each(name => {
+        Object.prototype[name] = function () {
+            return b_(this)[name](...arguments);
+        };
+    });
+};
 
 module.exports = b_;
 
 // todo
 // move init to class static
-// add custom utility functions (e.g. set) to B_.static methods list
+// unwrap to getter
+// rename B_.list to value
