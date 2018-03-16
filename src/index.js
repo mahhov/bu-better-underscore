@@ -1,8 +1,8 @@
 const _ = require('underscore');
 
 class B_ {
-    constructor(list) {
-        this.list = list;
+    constructor(value) {
+        this.value = value;
     }
 
     set(field, func) {
@@ -16,29 +16,29 @@ class B_ {
     }
 
     field(name) {
-        return new B_(this.list[name]);
+        return new B_(this.value[name]);
     }
 
     asList(func) {
-        return func(this.list);
+        return func(this.value);
     }
 
     unwrap() {
-        return this.list;
+        return this.value;
     }
 
     get length() {
-        return this.list && this.list.length;
+        return this.value && this.value.length;
     }
 }
 
-let b_ = (list) => new B_(list);
+let b_ = (value) => new B_(value);
 
 // add to B_ what _ includes
 _.each(_.keys(_), name => {
     let orig = _[name];
     B_.prototype[name] = function () {
-        return new B_(orig(this.list, ...arguments));
+        return new B_(orig(this.value, ...arguments));
     };
 });
 
@@ -48,7 +48,7 @@ let methods = b_(Object.getOwnPropertyNames(B_.prototype))
 
 // add B_ and _ methods as static methods to b_
 methods.each(name => {
-    b_[name] = handler => list => b_(list)[name](handler);
+    b_[name] = handler => value => b_(value)[name](handler);
 });
 
 // add to prototype
@@ -65,4 +65,3 @@ module.exports = b_;
 // todo
 // move init to class static
 // unwrap to getter
-// rename B_.list to value

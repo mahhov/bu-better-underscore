@@ -47,13 +47,13 @@ describe('b_', () => {
             it('should set the property on all elements', () => {
                 let list = b_([{}, {}, {}]);
                 list.set('key', () => 'value');
-                expect(list.list).toEqual([{key: 'value'}, {key: 'value'}, {key: 'value'}]);
+                expect(list.value).toEqual([{key: 'value'}, {key: 'value'}, {key: 'value'}]);
             });
 
             it('should pass in element, index, and entire array as arguments to handler function', () => {
                 let list = b_([{value: 4}, {value: 6}, {value: 8}]);
                 list.set('sum', (elem, index, array) => elem.value + index + array.length);
-                expect(list.list).toEqual([{value: 4, sum: 7}, {value: 6, sum: 10}, {value: 8, sum: 13}]);
+                expect(list.value).toEqual([{value: 4, sum: 7}, {value: 6, sum: 10}, {value: 8, sum: 13}]);
             });
         });
 
@@ -61,14 +61,14 @@ describe('b_', () => {
             it('should replace each element with a list containing that element repeated `n` times', () => {
                 let list = b_([1, 2, 3]);
                 list = list.repeat(3);
-                expect(list.list).toEqual([[1, 1, 1], [2, 2, 2], [3, 3, 3]]);
+                expect(list.value).toEqual([[1, 1, 1], [2, 2, 2], [3, 3, 3]]);
             });
         });
 
         describe('#field', () => {
             it('should return named field as a B_ object', () => {
                 let obj = b_({dog: 3});
-                expect(obj.field('dog').list).toEqual(3);
+                expect(obj.field('dog').value).toEqual(3);
             });
         });
 
