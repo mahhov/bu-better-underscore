@@ -332,7 +332,7 @@ let getUnReviewedPullRequests = async users => {
 getUnReviewedPullRequests(users);
 ```
 
-### Doesn't underscore `chain` address this?
+### Doesn't underscore's `chain` address this?
 
 Kind of. Except, underscore lacks methods to operate on entire lists (such as `set`, `field`, and `asList`). This leads to multiple ugly wrapping (`chain`) and unwrapping (`value`) in order to switch back and forth between underscore objects and js objects.
 
